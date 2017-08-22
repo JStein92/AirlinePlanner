@@ -1,0 +1,32 @@
+@{
+  Layout = "_Layout";
+}
+
+<h1>Add a new Flight</h1>
+
+<form action="/flights" method="post" class="form-group">
+
+  <label for="departure-time">Departure Time</label>
+  <input type="date" name="departure-time" class="form-control">
+
+  <label for="departure-city">Departure City</label>
+  <select class="selectpicker" name="departure-city">
+    @foreach(var city in Model)
+    {
+        <option value="@city.GetId()">@city.GetName()</option>
+    }
+  </select>
+
+  <label for="departure-city">Arrival City</label>
+  <select class="selectpicker" name="arrival-city">
+    @foreach(var city in Model)
+    {
+        <option value="@city.GetId()">@city.GetName()</option>
+    }
+  </select>
+
+  <label for="status">Status</label>
+  <input type="text" name="status" class="form-control">
+
+  <button type="submit" class="btn btn-success" name="button">Submit flight</button>
+</form>

@@ -35,6 +35,6 @@ namespace AirlinePlanner
 
   public static class DBConfiguration
     {
-        public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=AirlinePlanner;";
+        public static string ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=airline_planner;";
     }
 }

@@ -1,0 +1,23 @@
+@{
+  Layout = "_Layout";
+}
+
+@foreach (var city in Model)
+{
+  <div class="panel panel-info">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h1>@city.GetName()</h1></div>
+    <div class="panel-body">
+      <h5>All flights related:</h5>
+    </div>
+    <!-- List group -->
+    <ul>
+      @foreach(var flight in city.GetFlights())
+      {
+          <li>@flight.GetDepartureCity() to @flight.GetArrivalCity() (@flight.GetDepartureTime())</li>
+      }
+      </ul>
+  </div>
+}
+
+<a href="/"><button type="button" class="btn btn-warning" name="button">Home</button></a>

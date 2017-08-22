@@ -6,17 +6,13 @@ using AirlinePlanner.Models;
 namespace AirlinePlanner.Tests
 {
   [TestClass]
-  public class CityTest
+  public class CityTest : IDisposable
   {
     public CityTest()
     {
-        DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=AirlinePlanner_test;";
+        DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=airline_planner_test;";
     }
 
-    // public Void Dispose()
-    // {
-    //
-    // }
     [TestMethod]
     public void GetAll_GetAllItemsInDatabase_CityList()
     {
@@ -33,17 +29,32 @@ namespace AirlinePlanner.Tests
 
       List<City> testList = new List<City>{city};
 
-      foreach(var City in result)
-      {
-        Console.WriteLine("GET ALL LIST: " + City.GetName());
-      }
-      foreach(var City in testList)
-      {
-        Console.WriteLine("TEST LIST: " + City.GetName());
-      }
-
       CollectionAssert.AreEqual(testList,result);
     }
+
+    [TestMethod]
+    public void AddFlight_AddFlightToCity_Flight()
+    {
+      Flight testFlight = new Flight(DateTime.Now, "Seattle", "Chicago", "OnTime");
+      City testCity = new City("Chicago");
+      testFlight.Save();
+      testCity.Save();
+
+      testCity.AddFlight(testFlight);
+
+      List<Flight> expected = new List<Flight>{testFlight};
+      List<Flight> actual = testCity.GetFlights();
+
+      CollectionAssert.AreEqual(expected,actual);
+
+    }
+
+    public void Dispose()
+    {
+      Flight.DeleteAll();
+      City.DeleteAll();
+    }
+
   }
 
 }

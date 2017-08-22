@@ -1,0 +1,40 @@
+@{
+  Layout = "_Layout";
+}
+
+@foreach (var flight in Model["allFlights"])
+{
+  <div class="panel panel-info">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h1>@flight.GetDepartureCity() to @flight.GetArrivalCity()</h1></div>
+    <div class="panel-body">
+      <h4>Departure Time: @flight.GetDepartureTime() </h4>
+      <h4>Status: @flight.GetStatus()</h4>
+      <br>
+      <h5>All stops below</h5>
+    </div>
+    <!-- List group -->
+
+    <form action="/flights/newStop" method="post">
+      <select class="selectpicker"name="cityId">
+      @foreach(var city in Model["allCities"])
+      {
+          <option value="@city.GetId()">@city.GetName()</option>
+      }
+      </select>
+
+      <input type="hidden" value="@flight.GetId()" name="flightId">
+      <button type="submit" class="btn btn-success" name="button">Add city</button>
+    </form>
+
+    @foreach (var city in flight.GetCities())
+    {
+      <ul class="list-group">
+        <li class="list-group-item">Additional Stop: @city.GetName()</li>
+      </ul>
+    }
+
+  </div>
+}
+
+<a href="/"><button type="button" class="btn btn-warning" name="button">Home</button></a>
